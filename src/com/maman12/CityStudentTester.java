@@ -11,7 +11,8 @@ public class CityStudentTester
         System.out.println("\tcity2:\n"+city2);
         System.out.println("\n2. Testing accessors and mutators:");
         city1.setCityName("AnotherCity");
-        Date d1 = new Date(1,9,2009);
+        Date d1 = new Date(1,9,1955);
+        city1.setDateEstablished(d1);
         Point p1 = new Point(20,30);
         city1.setCityCenter(p1);
         city1.setCentralStation(p1);
@@ -46,7 +47,6 @@ public class CityStudentTester
         System.out.println("\tcity5 (the new city) is:\n"+city5);       
         System.out.println("\n7. Testing cityEstablishedBetweenDates method:");
         Date d2 = new Date(10,10,2020);
-        System.out.println(city5.getDateEstablished().toString());
          if(city5.cityEstablishedBetweenDates(d1,d2))
              System.out.println("\tcity5 was established between " + d1 + " and " + d2);
         else 

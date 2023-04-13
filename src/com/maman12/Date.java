@@ -22,11 +22,11 @@ public class Date {
      * @param year  the year.
      */
     public Date(int day, int month, int year) {
-        if (checkDateValidity(day, month, year)) {
+        if (checkDateValidity(day, month, year)) { //Calling the checkDateValidity method to check if the date is valid.
             _day = day;
             _month = month;
             _year = year;
-        } else {
+        } else { //If the date is not valid, the date will be set to 1/1/2000.
             _day = 1;
             _month = 1;
             _year = 2000;
@@ -39,9 +39,9 @@ public class Date {
      * @param other The date from which to construct the new object.
      */
     public Date(Date other) {
-        this._day = other._day;
-        this._month = other._month;
-        this._year = other._year;
+        this._day = other._day;//Copy the day.
+        this._month = other._month;//Copy the month.
+        this._year = other._year;//Copy the year.
     }
 
     //Get methods
@@ -82,7 +82,8 @@ public class Date {
      * @param dayToSet the new day of the month.
      */
     public void setDay(int dayToSet) {
-        if (checkDateValidity(dayToSet, _month, _year)) {
+        if (checkDateValidity(dayToSet, _month, _year)) { //Calling the checkDateValidity method to check
+            // if the date is valid with the new day. If not, the day will not be changed.
             _day = dayToSet;
         }
     }
@@ -94,7 +95,8 @@ public class Date {
      * @param monthToSet the new month of the year.
      */
     public void setMonth(int monthToSet) {
-        if (checkDateValidity(_day, monthToSet, _year)) {
+        if (checkDateValidity(_day, monthToSet, _year)) { //Calling the checkDateValidity method to check
+            // if the date is valid with the new month. If not, the month will not be changed.
             _month = monthToSet;
         }
     }
@@ -106,7 +108,8 @@ public class Date {
      * @param yearToSet the new year.
      */
     public void setYear(int yearToSet) {
-        if (checkDateValidity(_day, _month, yearToSet)) {
+        if (checkDateValidity(_day, _month, yearToSet)) { //Calling the checkDateValidity method to check
+            // if the date is valid with the new year. If not, the year will not be changed.
             _year = yearToSet;
         }
     }
@@ -122,6 +125,7 @@ public class Date {
 
     public boolean equals(Date other) {
         return _day == other._day && _month == other._month && _year == other._year;
+        //Check if the day, month and year are the same. And return true if they are.
     }
 
     //before method
@@ -133,16 +137,18 @@ public class Date {
      * @return true if this date is before the other date, false otherwise.
      */
     public boolean before(Date other) {
-        if (_year < other._year) {
+        if (_year < other._year) { //Check if the year is smaller than the other year. return true if it is.
             return true;
         }
-        if (_year == other._year && _month < other._month) {
+        if (_year == other._year && _month < other._month) { //Check if the year is the same,
+            // and the month is smaller than the other month. return true if it is.
             return true;
         }
-        if (_year == other._year && _month == other._month && _day < other._day) {
+        if (_year == other._year && _month == other._month && _day < other._day) { //Check if the year and month are the same,
+            // and the day is smaller than the other day. return true if it is.
             return true;
         }
-        return false;
+        return false;// If all the conditions are not met, return false.
     }
 
     //after method
@@ -155,7 +161,7 @@ public class Date {
      */
 
     public boolean after(Date other) {
-        return other.before(this);
+        return other.before(this); //Check if the other date is before this date. return true if it is.
     }
 
     //difference method
@@ -168,6 +174,7 @@ public class Date {
      */
     public int difference(Date other) {
         return Math.abs(calculateDate(_day, _month, _year) - calculateDate(other._day, other._month, other._year));
+        //Calculate the difference between the two dates and return the absolute value of the result.
     }
 
     //toString method
@@ -194,47 +201,47 @@ public class Date {
      */
 
     public Date tomorrow() {
-        int day = _day;
-        int month = _month;
-        int year = _year;
-        if (day == 31 && month == 12) {
-            day = 1;
-            month = 1;
-            year++;
+        int day = _day; //Creating a temporary variables for the day.
+        int month = _month;//Creating a temporary variables for the month.
+        int year = _year;//Creating a temporary variables for the year.
+        if (day == 31 && month == 12) { //Check if the day is the last day of the year.
+            day = 1; //If it is, set the day to 1.
+            month = 1; //Set the month to 1.
+            year++;//Increase the year by 1.
         } else if (day == 31 && (month == 4 || month == 6 || month == 9 || month == 11)) {
-            day = 1;
-            month++;
+            day = 1;//If the day is the last day of a month with 31 days, set the day to 1.
+            month++;//Increase the month by 1.
         } else if (day == 28 && month == 2) { //Ignoring leap years.
-            day = 1;
-            month++;
+            day = 1;//If the day is the last day of February, set the day to 1.
+            month++; //Increase the month by 1.
         } else if (day == 30 && month == 2) {
-            day = 1;
-            month++;
+            day = 1;//If the day is the last day of a month with 30 days, set the day to 1.
+            month++;//Increase the month by 1.
         } else {
-            day++;
+            day++;//If the day is not the last day of the month, increase the day by 1.
         }
         return new Date(day, month, year);
     }
-    private boolean checkDateValidity(int day, int month, int year) {
+    private boolean checkDateValidity(int day, int month, int year) { //Method to check if the date is valid.
         if (year < 1000 || year > 2023) { // Assuming that valid dates are between 1000 and 2023,
             // but we could change it to 9999.
             return false;
         }
-        if (month < 0 || month > 12) {
+        if (month < 0 || month > 12) { // Assuming that valid months are between 1 and 12,
             return false;
         }
-        if (day < 0 || day > 31) {
+        if (day < 0 || day > 31) { // Assuming that valid days are between 1 and 31,
             return false;
         }
         if (month == 2 && day > 28) { //Ignoring leap years(29 days in February in a leap year).
             return false;
         }
-        if (month == 4 || month == 6 || month == 9 || month == 11) {
+        if (month == 4 || month == 6 || month == 9 || month == 11) { //Months with 30 days.
             return day <= 30; // We know that _day is not negative, so we don't need to check it
         }
         return true;
     }
-    private int calculateDate(int day, int month, int year) {
+    private int calculateDate(int day, int month, int year) { //Included method to calculate days value of a given date.
         if (month < 3) {
             year--;
             month = month + 12;

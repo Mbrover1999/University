@@ -18,8 +18,8 @@ public class Point {
      */
     public Point(int x, int y) {
 
-        _x = x < 0 ? 0 : x;
-        _y = y < 0 ? 0 : y;
+        _x = x < 0 ? 0 : x; //Since x and y cannot be negative, if they are, they will be set to 0.
+        _y = y < 0 ? 0 : y; //Since x and y cannot be negative, if they are, they will be set to 0.
     }
 
     /**
@@ -28,8 +28,8 @@ public class Point {
      * @param other The point from which to construct the new object.
      */
     public Point(Point other) {
-        this._x = other._x;
-        this._y = other._y;
+        this._x = other._x; //Copy the x coordinate.
+        this._y = other._y; //Copy the y coordinate.
     }
 
     //Get methods
@@ -62,7 +62,7 @@ public class Point {
      * @param num the new x coordinate of the point.
      */
     public void setX(int num) {
-        if (num > 0) {
+        if (num > 0) {  //If the value is below zero, the x coordinate will not be changed.
             this._x = num;
         }
 
@@ -77,7 +77,7 @@ public class Point {
      */
 
     public void setY(int num) {
-        if (num > 0) {
+        if (num > 0) { //If the value is below zero, the y coordinate will not be changed.
             this._y = num;
         }
     }
@@ -117,7 +117,7 @@ public class Point {
      */
 
     public boolean isAbove(Point other) {
-        return this._y > other._y;
+        return this._y > other._y; //For a point to be above another point, its y coordinate must be bigger.
     }
 
     //isUnder method
@@ -130,7 +130,7 @@ public class Point {
      */
 
     public boolean isUnder(Point other) {
-        return !isAbove(other);
+        return other.isAbove(this); //If this point is under the received point, the received point is above this point.
     }
 
     //isLeft method
@@ -143,7 +143,7 @@ public class Point {
      */
 
     public boolean isLeft(Point other) {
-        return this._x < other._x;
+        return this._x < other._x; //For a point to be left of another point, its x coordinate must be smaller.
     }
 
     //isRight method
@@ -156,7 +156,7 @@ public class Point {
      */
 
     public boolean isRight(Point other) {
-        return other.isLeft(this);
+        return other.isLeft(this); //If this point is right of the received point, the received point is left of this point.
     }
 
     //move method
@@ -170,9 +170,9 @@ public class Point {
      */
 
     public void move(int deltaX, int deltaY) {
-        int newX = this._x + deltaX;
-        int newY = this._y + deltaY;
-        if (newX >= 0 && newY >= 0) {
+        int newX = this._x + deltaX; //Creating a temporary variable for the new x coordinate.
+        int newY = this._y + deltaY; //Creating a temporary variable for the new y coordinate.
+        if (newX >= 0 && newY >= 0) { //Checking if the new coordinates are in the first quadrant. if not, the point will not be moved.
             this._x = newX;
             this._y = newY;
         }
@@ -187,8 +187,8 @@ public class Point {
      * @return the middle point between this point and the received point.
      */
     public Point middle(Point other) {
-        int x = (this._x + other._x) / 2;
-        int y = (this._y + other._y) / 2;
+        int x = (this._x + other._x) / 2; //Calculating the middle x coordinate.
+        int y = (this._y + other._y) / 2; //Calculating the middle y coordinate.
         return new Point(x, y);
     }
 
@@ -201,9 +201,9 @@ public class Point {
      * @return the distance between this point and the received point.
      */
     public double distance(Point other) {
-        int xGap = this._x - other._x;
-        int yGap = this._y - other._y;
-        return Math.sqrt((xGap * xGap) + (yGap * yGap));
+        int xGap = this._x - other._x; //Calculating the gap between the x coordinates.
+        int yGap = this._y - other._y; //Calculating the gap between the y coordinates.
+        return Math.sqrt((xGap * xGap) + (yGap * yGap)); //Calculating the distance between the points.
     }
 
 }

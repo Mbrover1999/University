@@ -16,7 +16,7 @@ public class PointStudentTester
         System.out.println("\tX coordinate of p1:"+p1.getX());
         System.out.println("\tY coordinate of p1:"+p1.getY());
         System.out.println("\n3. Testing equals method:");
-        Point p3=new Point(50,120);
+        Point p3=new Point(50,70);
         Point p4=new Point(50,70);
         System.out.println("\tp3:"+p3);
         System.out.println("\tp4:"+p4);
@@ -47,7 +47,7 @@ public class PointStudentTester
         System.out.println("\n8. Testing distance method:");
         System.out.println("\tThe distance between dates p1 and p3 is : "+p1.distance(p3));
         System.out.println("\n9. Testing move method:");
-        p1.move(-100,200);
+        p1.move(100,200);
         System.out.println("\tp1 after move (100,200):"+p1);
         System.out.println("\n10. Testing middle method:");
         System.out.println("\tThe middle between points p1 and p3 is : "+p1.middle(p3));

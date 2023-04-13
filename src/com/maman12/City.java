@@ -1,7 +1,8 @@
 package com.maman12;
 
 /**
- * Represents a city. City is represented by its name, the date it was established, center, central station, number of residents(non negative) and number of neighborhoods(positive).
+ * Represents a city. City is represented by its name, the date it was established, center, central station, number of residents(non-negative) and number of neighborhoods(positive).
+ * @author Michael Brover
  */
 
 public class City {
@@ -17,19 +18,29 @@ public class City {
     public City(String cityName, int dayEstablished, int monthEstablished, int yearEstablished, int centerX, int centerY, int stationX, int stationY, long numOfResidents, int numOfNeighborhoods) {
         _cityName = cityName;
         _dateEstablished = new Date(dayEstablished, monthEstablished, yearEstablished);
+        //The Date object will handle the validity of the date.
         _cityCenter = new Point(centerX, centerY);
+        //The Point object will handle the validity of the coordinates.
         _centralStation = new Point(stationX, stationY);
+        //The Point object will handle the validity of the coordinates.
         _numOfResidents = numOfResidents < 0 ? 0 : numOfResidents;
+        //If the number of residents is negative, it will be set to 0.
         _numOfNeighborhoods = numOfNeighborhoods <= 0 ? 1 : numOfNeighborhoods;
+        //If the number of neighborhoods is negative or 0, it will be set to 1.
     }
 
     public City(City other) {
-        _cityName = other._cityName;
+        _cityName = other._cityName;//Copy the city name.
         _dateEstablished = new Date(other._dateEstablished);
+        //Copy the date established but create a new Date object to avoid aliasing.
         _cityCenter = new Point(other._cityCenter);
+        //Copy the city center but create a new Point object to avoid aliasing.
         _centralStation = new Point(other._centralStation);
+        //Copy the central station but create a new Point object to avoid aliasing.
         _numOfResidents = other._numOfResidents;
+        //Copy the number of residents.
         _numOfNeighborhoods = other._numOfNeighborhoods;
+        //Copy the number of neighborhoods.
     }
 
     //get methods
@@ -112,7 +123,8 @@ public class City {
      * @param dateEst the new city established date.
      */
     public void setDateEstablished(Date dateEst) {
-        _dateEstablished = new Date(dateEst);
+        _dateEstablished = new Date(dateEst); //Create a new Date object to avoid aliasing.
+        // Date object will handle the validity of the date.
     }
 
     /**
@@ -122,7 +134,8 @@ public class City {
      */
 
     public void setCityCenter(Point cityCenter) {
-        _cityCenter = new Point(cityCenter);
+        _cityCenter = new Point(cityCenter); //Create a new Point object to avoid aliasing.
+        // Point object will handle the validity of the coordinates.
     }
 
     /**
@@ -132,7 +145,8 @@ public class City {
      */
 
     public void setCentralStation(Point centralStation) {
-        _centralStation = new Point(centralStation);
+        _centralStation = new Point(centralStation); //Create a new Point object to avoid aliasing.
+        // Point object will handle the validity of the coordinates.
     }
 
     /**
@@ -142,7 +156,8 @@ public class City {
      */
 
     public void setNumOfResidents(long numOfResidents) {
-        _numOfResidents = numOfResidents < 0 ? 0 : numOfResidents;
+        _numOfResidents = numOfResidents < 0 ? 0 : numOfResidents; //If the number of residents is negative,
+        // it will be set to 0.
     }
 
     /**
@@ -152,7 +167,8 @@ public class City {
      */
 
     public void setNumOfNeighborhoods(int numOfNeighborhoods) {
-        _numOfNeighborhoods = numOfNeighborhoods <= 0 ? 1 : numOfNeighborhoods;
+        _numOfNeighborhoods = numOfNeighborhoods <= 0 ? 1 : numOfNeighborhoods; //If the number of neighborhoods is negative or 0,
+        // it will be set to 1.
     }
 
     //toString method
@@ -188,7 +204,7 @@ public class City {
                 && _cityCenter.equals(other._cityCenter)
                 && _centralStation.equals(other._centralStation)
                 && _numOfResidents == other._numOfResidents
-                && _numOfNeighborhoods == other._numOfNeighborhoods;
+                && _numOfNeighborhoods == other._numOfNeighborhoods;//Check if all six instance variables are equal.
     }
 
     //addResidents method
@@ -200,11 +216,11 @@ public class City {
      */
 
     public boolean addResidents(long residentsUpdate) {
-        long newNumOfResidents = _numOfResidents + residentsUpdate;
-        if (newNumOfResidents < 0) {
+        long newNumOfResidents = _numOfResidents + residentsUpdate; //Create a new variable to hold the new number of residents.
+        if (newNumOfResidents < 0) { //If the new number of residents is negative, the number of residents will be set to 0.
             _numOfResidents = 0;
             return false;
-        } else {
+        } else { //If the new number of residents is positive, the number of residents will be set to the new number of residents.
             _numOfResidents = newNumOfResidents;
             return true;
         }
@@ -221,7 +237,8 @@ public class City {
      */
 
     public void moveCentralStation(int deltaX, int deltaY) {
-        _centralStation.move(deltaX, deltaY);
+        _centralStation.move(deltaX, deltaY);//Move the central station location.
+        // The Point object will handle the validity of the coordinates.
     }
 
     //distanceBetweenCenterAndStation method
@@ -233,7 +250,7 @@ public class City {
      */
 
     public double distanceBetweenCenterAndStation() {
-        return _cityCenter.distance(_centralStation);
+        return _cityCenter.distance(_centralStation);//Calculate the distance between the city's center and the central station.
     }
 
     //newCity method
@@ -252,13 +269,15 @@ public class City {
      */
 
     public City newCity(String newCityName, int dX, int dY) {
-        Point newCityCenter = new Point(_cityCenter);
-        Point newCityStation = new Point(_centralStation);
-        newCityCenter.move(dX, dY);
-        newCityStation.move(dX, dY);
-        Date newCityDate = new Date(_dateEstablished).tomorrow();
-        long newCityResidents = 0;
-        int newCityNeighborhoods = 1;
+        Point newCityCenter = new Point(_cityCenter); //Create a new Point object with the original city center's values to avoid aliasing.
+        Point newCityStation = new Point(_centralStation); //Create a new Point object with the original central station's values to avoid aliasing.
+        newCityCenter.move(dX, dY); //Move the new city center location.
+        // The Point object will handle the validity of the coordinates.
+        newCityStation.move(dX, dY);//Move the new central station location.
+        // The Point object will handle the validity of the coordinates.
+        Date newCityDate = new Date(_dateEstablished).tomorrow();//Create a new Date object with the original date established's values to avoid aliasing.
+        long newCityResidents = 0;//The new city will have 0 residents.
+        int newCityNeighborhoods = 1;//The new city will have 1 neighborhood.
         return new City(newCityName, newCityDate.getDay(), newCityDate.getMonth(),
                 newCityDate.getYear(), newCityCenter.getX(), newCityCenter.getY(),
                 newCityStation.getX(), newCityStation.getY(), newCityResidents,
@@ -277,11 +296,15 @@ public class City {
 
     public boolean cityEstablishedBetweenDates(Date date1, Date date2) {
         int date1DaysValue = calculateDate(date1.getDay(), date1.getMonth(), date1.getYear());
+        //Calculate the number of days from the first date.
         int date2DaysValue = calculateDate(date2.getDay(), date2.getMonth(), date2.getYear());
-        int BiggestDate = Math.max(date1DaysValue, date2DaysValue);
-        int SmallestDate = Math.min(date1DaysValue, date2DaysValue);
+        //Calculate the number of days from the second date.
+        int BiggestDate = Math.max(date1DaysValue, date2DaysValue);//Find the biggest number of days of the two dates.
+        int SmallestDate = Math.min(date1DaysValue, date2DaysValue);//Find the smallest number of days of the two dates.
         int cityEstablishedDaysValue = calculateDate(_dateEstablished.getDay(), _dateEstablished.getMonth(), _dateEstablished.getYear());
+        //Calculate the number of days from the city established date.
         return cityEstablishedDaysValue >= SmallestDate && cityEstablishedDaysValue <= BiggestDate;
+        //Check if the city established date is between the two given dates.
     }
 
 
@@ -296,9 +319,10 @@ public class City {
 
     public int establishmentDateDiff(City other) {
         return _dateEstablished.difference(other._dateEstablished);
+        //Calculate the difference between the city's established date and a given date using the Date object difference method.
     }
 
-    private int calculateDate(int day, int month, int year) {
+    private int calculateDate(int day, int month, int year) {//Included method to calculate the number of days from a given date.
         if (month < 3) {
             year--;
             month = month + 12;
