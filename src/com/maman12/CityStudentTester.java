@@ -35,7 +35,7 @@ public class CityStudentTester
         else 
              System.out.println("\tcity3 isn't the same date as city4");
         System.out.println("\n4. Testing addResidents method:");
-        city1.addResidents(200);
+        city1.addResidents(-85858);
         System.out.println("\tNumber of residents of city1 (after adding 200):"+city1.getNumOfResidents());
         System.out.println("\n5. Testing moveCentralStation method:");
         city1.moveCentralStation(100,200);

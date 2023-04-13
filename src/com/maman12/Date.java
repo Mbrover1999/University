@@ -12,6 +12,34 @@ public class Date {
     private int _month;
     private int _year;
 
+    //Static variables
+
+    private static final int DEFAULT_YEAR = 2000; //The default year for the date.
+    private static final int DEFAULT_MONTH = 1; //The default month for the date.
+    private static final int DEFAULT_DAY = 1; //The default day for the date.
+
+    private static final int MIN_YEAR = 1000; //The minimum year for the date.
+    private static final int MAX_YEAR = 2023; //The maximum year for the date.
+
+    private static final int MIN_DAY = 1; //The minimum day for the date.
+    private static final int DAY_28 = 28; //The number of days in February in a non-leap year.
+    private static final int DAY_30 = 30; //The number of days in April, June, September and November.
+    private static final int DAY_31 = 31; //The number of days in January, March, May, July, August, October and December.
+
+    private static final int MONTH_1 = 1; //The number of the first month.
+    private static final int MONTH_2 = 2; //The number of the second month.
+    private static final int MONTH_3 = 3; //The number of the third month.
+    private static final int MONTH_4 = 4; //The number of the fourth month.
+    private static final int MONTH_5 = 5; //The number of the fifth month.
+    private static final int MONTH_6 = 6; //The number of the sixth month.
+    private static final int MONTH_7 = 7; //The number of the seventh month.
+    private static final int MONTH_8 = 8; //The number of the eighth month.
+    private static final int MONTH_9 = 9; //The number of the ninth month.
+    private static final int MONTH_10 = 10; //The number of the tenth month.
+    private static final int MONTH_11 = 11; //The number of the eleventh month.
+    private static final int MONTH_12 = 12; //The number of the twelfth month.
+
+    private static final int TEN = 10; //The number 10 to check if the day is a double-digit.
     //Constructors
 
     /**
@@ -27,9 +55,9 @@ public class Date {
             _month = month;
             _year = year;
         } else { //If the date is not valid, the date will be set to 1/1/2000.
-            _day = 1;
-            _month = 1;
-            _year = 2000;
+            _day = DEFAULT_DAY;
+            _month = DEFAULT_MONTH;
+            _year = DEFAULT_YEAR;
         }
     }
 
@@ -187,8 +215,8 @@ public class Date {
 
     @Override
     public String toString() {
-        String day = _day < 10 ? "0" + _day : "" + _day;
-        String month = _month < 10 ? "0" + _month : "" + _month;
+        String day = _day < TEN ? "0" + _day : "" + _day;
+        String month = _month < TEN ? "0" + _month : "" + _month;
         return day + "/" + month + "/" + _year;
     }
 
@@ -204,18 +232,18 @@ public class Date {
         int day = _day; //Creating a temporary variables for the day.
         int month = _month;//Creating a temporary variables for the month.
         int year = _year;//Creating a temporary variables for the year.
-        if (day == 31 && month == 12) { //Check if the day is the last day of the year.
-            day = 1; //If it is, set the day to 1.
-            month = 1; //Set the month to 1.
+        if (day == DAY_31 && month == MONTH_12) { //Check if the day is the last day of the year.
+            day = MIN_DAY; //If it is, set the day to 1.
+            month = MONTH_1; //Set the month to 1.
             year++;//Increase the year by 1.
-        } else if (day == 31 && (month == 4 || month == 6 || month == 9 || month == 11)) {
-            day = 1;//If the day is the last day of a month with 31 days, set the day to 1.
+        } else if (day == DAY_31 && (month ==  MONTH_1 || month == MONTH_3 || month == MONTH_5 || month == MONTH_7 || month == MONTH_8 || month == MONTH_10)) {
+            day = MIN_DAY;//If the day is the last day of a month with 31 days, set the day to 1.
             month++;//Increase the month by 1.
-        } else if (day == 28 && month == 2) { //Ignoring leap years.
-            day = 1;//If the day is the last day of February, set the day to 1.
+        } else if (day == DAY_28 && month == MONTH_2) { //Ignoring leap years.
+            day = MIN_DAY;//If the day is the last day of February, set the day to 1.
             month++; //Increase the month by 1.
-        } else if (day == 30 && month == 2) {
-            day = 1;//If the day is the last day of a month with 30 days, set the day to 1.
+        } else if (day == DAY_30 && (month == MONTH_4 || month == MONTH_6 || month == MONTH_9 || month == MONTH_11)) {
+            day = MIN_DAY;//If the day is the last day of a month with 30 days, set the day to 1.
             month++;//Increase the month by 1.
         } else {
             day++;//If the day is not the last day of the month, increase the day by 1.
@@ -223,25 +251,26 @@ public class Date {
         return new Date(day, month, year);
     }
     private boolean checkDateValidity(int day, int month, int year) { //Method to check if the date is valid.
-        if (year < 1000 || year > 2023) { // Assuming that valid dates are between 1000 and 2023,
+        if (year < MIN_YEAR || year > MAX_YEAR) { // Assuming that valid dates are between 1000 and 2023,
             // but we could change it to 9999.
             return false;
         }
-        if (month < 0 || month > 12) { // Assuming that valid months are between 1 and 12,
+        if (month < MONTH_1 || month > MONTH_12) { // Assuming that valid months are between 1 and 12,
             return false;
         }
-        if (day < 0 || day > 31) { // Assuming that valid days are between 1 and 31,
+        if (day < MIN_DAY || day > DAY_31) { // Assuming that valid days are between 1 and 31,
             return false;
         }
-        if (month == 2 && day > 28) { //Ignoring leap years(29 days in February in a leap year).
+        if (month == MONTH_2 && day > DAY_28) { //Ignoring leap years(29 days in February in a leap year).
             return false;
         }
-        if (month == 4 || month == 6 || month == 9 || month == 11) { //Months with 30 days.
-            return day <= 30; // We know that _day is not negative, so we don't need to check it
+        if (month == MONTH_4 || month == MONTH_6 || month == MONTH_9 || month == MONTH_11) { //Months with 30 days.
+            return day <= DAY_30; // We know that _day is not negative, so we don't need to check it
         }
         return true;
     }
     private int calculateDate(int day, int month, int year) { //Included method to calculate days value of a given date.
+        //Kept the original numbers and did not create constants for them.
         if (month < 3) {
             year--;
             month = month + 12;

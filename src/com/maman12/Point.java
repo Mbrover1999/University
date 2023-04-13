@@ -8,6 +8,10 @@ public class Point {
     private int _x;
     private int _y;
 
+    //Static variables
+    private static final int DEFAULT_VALUE = 0; //The default value for the coordinates.
+    private static final int DIVIDER = 2; //The divider for the distance between two points.
+
     //Constructors
 
     /**
@@ -18,8 +22,8 @@ public class Point {
      */
     public Point(int x, int y) {
 
-        _x = x < 0 ? 0 : x; //Since x and y cannot be negative, if they are, they will be set to 0.
-        _y = y < 0 ? 0 : y; //Since x and y cannot be negative, if they are, they will be set to 0.
+        _x = x < DEFAULT_VALUE ? DEFAULT_VALUE : x; //Since x and y cannot be negative, if they are, they will be set to 0.
+        _y = y < DEFAULT_VALUE ? DEFAULT_VALUE : y; //Since x and y cannot be negative, if they are, they will be set to 0.
     }
 
     /**
@@ -62,7 +66,7 @@ public class Point {
      * @param num the new x coordinate of the point.
      */
     public void setX(int num) {
-        if (num > 0) {  //If the value is below zero, the x coordinate will not be changed.
+        if (num > DEFAULT_VALUE) {  //If the value is below zero, the x coordinate will not be changed.
             this._x = num;
         }
 
@@ -77,7 +81,7 @@ public class Point {
      */
 
     public void setY(int num) {
-        if (num > 0) { //If the value is below zero, the y coordinate will not be changed.
+        if (num > DEFAULT_VALUE) { //If the value is below zero, the y coordinate will not be changed.
             this._y = num;
         }
     }
@@ -172,7 +176,7 @@ public class Point {
     public void move(int deltaX, int deltaY) {
         int newX = this._x + deltaX; //Creating a temporary variable for the new x coordinate.
         int newY = this._y + deltaY; //Creating a temporary variable for the new y coordinate.
-        if (newX >= 0 && newY >= 0) { //Checking if the new coordinates are in the first quadrant. if not, the point will not be moved.
+        if (newX >= DEFAULT_VALUE && newY >= DEFAULT_VALUE) { //Checking if the new coordinates are in the first quadrant. if not, the point will not be moved.
             this._x = newX;
             this._y = newY;
         }
@@ -187,8 +191,8 @@ public class Point {
      * @return the middle point between this point and the received point.
      */
     public Point middle(Point other) {
-        int x = (this._x + other._x) / 2; //Calculating the middle x coordinate.
-        int y = (this._y + other._y) / 2; //Calculating the middle y coordinate.
+        int x = (this._x + other._x) / DIVIDER; //Calculating the middle x coordinate(DIVIDER = 2).
+        int y = (this._y + other._y) / DIVIDER; //Calculating the middle y coordinate(DIVIDER = 2).
         return new Point(x, y);
     }
 

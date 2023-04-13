@@ -13,6 +13,12 @@ public class City {
     private long _numOfResidents;
     private int _numOfNeighborhoods;
 
+    //Static variables
+
+    private static final int MIN_RESIDENTS = 0; //The minimum number of residents.
+    private static final int MIN_NEIGHBORHOODS = 1; //The minimum number of neighborhoods.
+
+
     //Constructors
 
     public City(String cityName, int dayEstablished, int monthEstablished, int yearEstablished, int centerX, int centerY, int stationX, int stationY, long numOfResidents, int numOfNeighborhoods) {
@@ -23,9 +29,9 @@ public class City {
         //The Point object will handle the validity of the coordinates.
         _centralStation = new Point(stationX, stationY);
         //The Point object will handle the validity of the coordinates.
-        _numOfResidents = numOfResidents < 0 ? 0 : numOfResidents;
+        _numOfResidents = numOfResidents < MIN_RESIDENTS ? MIN_RESIDENTS : numOfResidents;
         //If the number of residents is negative, it will be set to 0.
-        _numOfNeighborhoods = numOfNeighborhoods <= 0 ? 1 : numOfNeighborhoods;
+        _numOfNeighborhoods = numOfNeighborhoods < MIN_NEIGHBORHOODS ? MIN_NEIGHBORHOODS : numOfNeighborhoods;
         //If the number of neighborhoods is negative or 0, it will be set to 1.
     }
 
@@ -156,7 +162,7 @@ public class City {
      */
 
     public void setNumOfResidents(long numOfResidents) {
-        _numOfResidents = numOfResidents < 0 ? 0 : numOfResidents; //If the number of residents is negative,
+        _numOfResidents = numOfResidents < MIN_RESIDENTS ? MIN_RESIDENTS : numOfResidents; //If the number of residents is negative,
         // it will be set to 0.
     }
 
@@ -167,7 +173,7 @@ public class City {
      */
 
     public void setNumOfNeighborhoods(int numOfNeighborhoods) {
-        _numOfNeighborhoods = numOfNeighborhoods <= 0 ? 1 : numOfNeighborhoods; //If the number of neighborhoods is negative or 0,
+        _numOfNeighborhoods = numOfNeighborhoods < MIN_NEIGHBORHOODS ? MIN_NEIGHBORHOODS : numOfNeighborhoods; //If the number of neighborhoods is negative or 0,
         // it will be set to 1.
     }
 
@@ -217,8 +223,8 @@ public class City {
 
     public boolean addResidents(long residentsUpdate) {
         long newNumOfResidents = _numOfResidents + residentsUpdate; //Create a new variable to hold the new number of residents.
-        if (newNumOfResidents < 0) { //If the new number of residents is negative, the number of residents will be set to 0.
-            _numOfResidents = 0;
+        if (newNumOfResidents < MIN_RESIDENTS) { //If the new number of residents is negative, the number of residents will be set to 0.
+            _numOfResidents = MIN_RESIDENTS;
             return false;
         } else { //If the new number of residents is positive, the number of residents will be set to the new number of residents.
             _numOfResidents = newNumOfResidents;
@@ -276,12 +282,10 @@ public class City {
         newCityStation.move(dX, dY);//Move the new central station location.
         // The Point object will handle the validity of the coordinates.
         Date newCityDate = new Date(_dateEstablished).tomorrow();//Create a new Date object with the original date established's values to avoid aliasing.
-        long newCityResidents = 0;//The new city will have 0 residents.
-        int newCityNeighborhoods = 1;//The new city will have 1 neighborhood.
         return new City(newCityName, newCityDate.getDay(), newCityDate.getMonth(),
                 newCityDate.getYear(), newCityCenter.getX(), newCityCenter.getY(),
-                newCityStation.getX(), newCityStation.getY(), newCityResidents,
-                newCityNeighborhoods);
+                newCityStation.getX(), newCityStation.getY(), MIN_RESIDENTS,
+                MIN_NEIGHBORHOODS);
     }
 
     // cityEstablishedBetweenDates method
@@ -323,6 +327,7 @@ public class City {
     }
 
     private int calculateDate(int day, int month, int year) {//Included method to calculate the number of days from a given date.
+        //This method was taken from the Date class.
         if (month < 3) {
             year--;
             month = month + 12;
