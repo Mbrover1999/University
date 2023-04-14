@@ -19,7 +19,7 @@ public class Date {
     private static final int DEFAULT_DAY = 1; //The default day for the date.
 
     private static final int MIN_YEAR = 1000; //The minimum year for the date.
-    private static final int MAX_YEAR = 2023; //The maximum year for the date.
+    private static final int MAX_YEAR = 9999; //The maximum year for the date.
 
     private static final int MIN_DAY = 1; //The minimum day for the date.
     private static final int DAY_28 = 28; //The number of days in February in a non-leap year.
@@ -251,8 +251,7 @@ public class Date {
         return new Date(day, month, year);
     }
     private boolean checkDateValidity(int day, int month, int year) { //Method to check if the date is valid.
-        if (year < MIN_YEAR || year > MAX_YEAR) { // Assuming that valid dates are between 1000 and 2023,
-            // but we could change it to 9999.
+        if (year < MIN_YEAR || year > MAX_YEAR) { // Assuming that valid dates are between 1000 and 9999,
             return false;
         }
         if (month < MONTH_1 || month > MONTH_12) { // Assuming that valid months are between 1 and 12,
